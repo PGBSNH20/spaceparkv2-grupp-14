@@ -16,9 +16,10 @@ namespace SpaceParkConsole
                 var userInput = Console.ReadLine();
                 Console.WriteLine("Enter your password!");
                 var passInput = Console.ReadLine();
-
-                
-
+            }
+            else
+            {
+                Console.WriteLine("Hello");
             }
         }
     }

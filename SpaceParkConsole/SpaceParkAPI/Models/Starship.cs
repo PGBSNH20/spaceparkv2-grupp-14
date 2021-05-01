@@ -4,11 +4,10 @@ using System.Threading.Tasks;
 
 namespace SpaceParkAPI.Models
 {
-    public class Starship
+    public class StarShip
     {
-        //public int ID { get; set; }
         public string Name { get; set; }
         public string Model { get; set; }
-        public double Passengers { get; set; }
+        public string Passengers { get; set; }
     }
 }

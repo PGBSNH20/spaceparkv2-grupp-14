@@ -17,13 +17,19 @@ namespace SpaceParkAPI.Controllers
     {
         // GET: api/<StarshipController>
         [HttpGet]
-        public async Task<StarshipRespone> Get()
+        public async Task<List<StarShip>> Get()
         {
+            var starships = new List<StarShip>();
             var client = new RestClient("https://swapi.dev/api/");
             var request = new RestRequest("starships/", DataFormat.Json);
             var starshipResponse = await client.GetAsync<StarshipRespone>(request);
 
-            return starshipResponse;
+            foreach (var s in starshipResponse.Results)
+            {
+                starships.Add(s);
+            }
+
+            return starships;
         }
 
         // GET api/<StarshipController>/5
