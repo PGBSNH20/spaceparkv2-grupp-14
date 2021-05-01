@@ -72,5 +72,13 @@ namespace SpaceParkConsole
                 }
             }
         }
+
+        public static string RequestUserInput(string prompt)
+        {
+            Console.Clear();
+            Console.WriteLine(prompt);
+
+            return Console.ReadLine();
+        }
     }
 }
