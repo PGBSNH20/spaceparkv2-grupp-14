@@ -6,6 +6,7 @@ namespace SpaceParkConsole
     {
         public static object ShowMenu(string info, object[] options)
         {
+            Console.CursorVisible = false;
             Console.WriteLine(info);
 
             //this is the item in the options that will be highlighted for selection when enter is pressed (starting on 0, top item)
@@ -23,7 +24,7 @@ namespace SpaceParkConsole
             {
                 //if key is page up we want to go upward on the options, meaning we need to remove 1 from indexhighlight (since 0 is top most value)
                 //also if indexhightlight is more than 0 since we can't select an option beyond 0 (ie -1)
-                if (key == ConsoleKey.PageUp && indexHighlight > 0)
+                if (key == ConsoleKey.UpArrow && indexHighlight > 0)
                 {
                     indexHighlight--;
                     HighlightPageOption(info, options, indexHighlight);
@@ -31,7 +32,7 @@ namespace SpaceParkConsole
                 //if key is page down we want to go downward on the option, so we add 1 to indexhighlight (since highest value is down most value)
                 //also check if indexhightlight is less than options.length - 1 since we cant go beyond the highest index of options
                 //that would just cause an index out of range exception and crash the program
-                else if (key == ConsoleKey.PageDown && indexHighlight < options.Length - 1)
+                else if (key == ConsoleKey.DownArrow && indexHighlight < options.Length - 1)
                 {
                     indexHighlight++;
                     HighlightPageOption(info, options, indexHighlight);
