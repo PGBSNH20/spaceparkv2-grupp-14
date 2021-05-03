@@ -6,7 +6,7 @@ using RestSharp;
 
 namespace SpaceParkAPI.Swapi
 {
-    interface ISwapi<T>
+    public interface ISwapi<T>
     {
         RestClient Client { get; set; }
         RestRequest Request { get; set; }

@@ -21,8 +21,7 @@ namespace SpaceParkAPI.Swapi
         public async Task<List<StarShip>> FetchAll()
         {
             var starships = new List<StarShip>();
-            int index = 1;
-            this.Request = new RestRequest($"starships/?page={index}", DataFormat.Json);
+            this.Request = new RestRequest("starships/?page=1", DataFormat.Json);
             var starshipResponse = await Client.GetAsync<StarshipRespone>(Request);
 
             bool nextPage = true;
@@ -40,8 +39,11 @@ namespace SpaceParkAPI.Swapi
                 }
                 else
                 {
-                    index++;
-                    this.Request = new RestRequest($"starships/?page{index}");
+                    string next = starshipResponse.Next
+                        .Split('/')
+                        .Last();
+
+                    this.Request = new RestRequest($"starships/{next}", DataFormat.Json);
                     starshipResponse = await Client.GetAsync<StarshipRespone>(this.Request);
                 }
             }
@@ -50,7 +52,7 @@ namespace SpaceParkAPI.Swapi
 
         public async Task<StarShip> FetchById(int id)
         {
-            this.Request = new RestRequest($"starships/{id}");
+            this.Request = new RestRequest($"starships/{id}/", DataFormat.Json);
             var result = await Client.GetAsync<StarShip>(Request);
 
             return result;
