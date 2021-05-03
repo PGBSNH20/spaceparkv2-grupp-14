@@ -29,6 +29,18 @@ namespace SpaceParkAPI.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
+            var ppl = new Swapi.SwapiPeople().FetchAll().Result;
+            Models.People person = ppl.Find(x => x.Name == value);
+
+            if(person != null)
+            {
+                //lägg in datan
+                //return StatusCode.200_OK;
+            }
+            else
+            {
+                //return StatusCode.404_NotFound;
+            }
         }
 
         // PUT api/<AccountController>/5
