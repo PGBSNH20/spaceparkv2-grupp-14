@@ -12,7 +12,6 @@ namespace SpaceParkAPI.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        // GET: api/<AccountController>
         [HttpGet]
         public IEnumerable<string> Get()
         {

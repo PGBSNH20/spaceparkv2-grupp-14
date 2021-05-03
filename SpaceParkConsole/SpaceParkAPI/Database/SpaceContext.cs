@@ -15,12 +15,10 @@ namespace SpaceParkAPI.Database
         {
 
         }
-        //public override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (optionsBuilder.IsConfigured == false)
-        //        optionsBuilder.UseSqlServer(connectionString);
-        //    //optionsBuilder.UseSqlServer(connectionString);
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(connectionString);
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
