@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SpaceParkAPI.Database;
+using SpaceParkAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,12 +29,17 @@ namespace SpaceParkAPI.Controllers
 
         // POST api/<AccountController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async void Post([FromBody] Account value)
         {
-            var ppl = new Swapi.SwapiPeople().FetchAll().Result;
-            Models.People person = ppl.Find(x => x.Name == value);
-
-            if(person != null)
+            var ppl = new Swapi.SwapiPeople();
+            var result = await ppl.FetchAll();
+            var person =  result.Find(x => x.Name == value.People.Name);
+            using (var db = new SpaceContext())
+            {
+                db.Accounts.Add(value);
+                db.SaveChanges();
+            }
+            if (person != null)
             {
                 //lägg in datan
                 //return StatusCode.200_OK;

@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceParkAPI", "SpaceParkAP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceParkAPITests", "SpaceParkAPITests\SpaceParkAPITests.csproj", "{926728B2-5F59-4CBB-8404-B2D495625A73}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{77DAF9BC-7599-4F68-ACBA-E550AE46ED66}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{926728B2-5F59-4CBB-8404-B2D495625A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{926728B2-5F59-4CBB-8404-B2D495625A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{926728B2-5F59-4CBB-8404-B2D495625A73}.Release|Any CPU.Build.0 = Release|Any CPU
-		{77DAF9BC-7599-4F68-ACBA-E550AE46ED66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77DAF9BC-7599-4F68-ACBA-E550AE46ED66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77DAF9BC-7599-4F68-ACBA-E550AE46ED66}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{77DAF9BC-7599-4F68-ACBA-E550AE46ED66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

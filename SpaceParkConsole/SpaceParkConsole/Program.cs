@@ -17,12 +17,11 @@ namespace SpaceParkConsole
             {
                 var username = Menu.RequestUserInput("Register your username!");
                 var password = Menu.RequestUserInput("Register your password!");
-                var realname = Menu.RequestUserInput("Input your Star Wars name!"); 
+                var realname = Menu.RequestUserInput("Input your Star Wars name!");
                 //HttpClient client = new HttpClient("localhost:xxx");
                 //HttpStatusCode code = client.SendAsync(username, password, realname).Response;
                 //if(code == 200) Console.WriteLine("Successfully registered");
                 //else if(code == 404) Console.WriteLine("No person with name {realname} found");
-
 
                 Console.WriteLine("Registration complete!");
                 Console.ReadLine();
