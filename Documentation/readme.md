@@ -25,7 +25,7 @@ Body:
 Responses: 
 * Returns Status code 201 (Created) if registration succeded.
 * Returns Status code 401 (Conflict) if username or star wars person already exists.
-* Returns status code 406 (Not acceptable) if star wars person does not exist on `https://swapi.dev/api/people/`.
+* Returns status code 406 (Not acceptable) if star wars person does not exist on the [Star Wars API](https://swapi.dev/api/people/).
     * This is to ensure you can only register as a star wars character.
 </details>
 
