@@ -6,7 +6,7 @@
 `/api`
 
 ### Account
-POST `api/account` - Adds a new account to the database
+*POST* `api/account` - Adds a new account to the database
 
 <details>
 <summary>Example</summary>
@@ -29,7 +29,7 @@ Responses:
     * This is to ensure you can only register as a star wars character.
 </details>
 
-GET `api/account/{username},{password}` - Used for account validation
+*GET* `api/account/{username},{password}` - Used for account validation
 
 <details>
 <summary>Example</summary>
