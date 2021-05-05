@@ -5,7 +5,12 @@
 * Vi satt och planerade hur vi ska implementera vår kod och projekt. Vi Gjorde två olika Flowcharts.
 Ena visar hur flowet ser ut när man använder vår program stegvis och det använder är mera 
 fokuserad på kommunikationen mellan Client, API:et och DB:n.
-* Vi skapade ett ConsoleApp, WebApi och la till RestClient Nuget Package.
+Vi skapade ett ConsoleApp, WebAPI och la till RestClient Nuget Package.
+* ConsoleApp är i princip vår entrypoint där klienten har tillgång till för
+att kunna registrera sig själva, registera parkering och betala för sin parkering.
+Det är också en entrypoint för admin att kunna logga in, se parkeringshistoriken,
+lägga till spaceport, nuvarande info gällande parkeringarna.
+* WebAPI:et är i princip vår verktyg för kunna kommunicera mellan klienten och databasen.
 
 # Flowcharts
 #### Menu
