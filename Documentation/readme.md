@@ -1,5 +1,30 @@
 # Documentation
 
+
+## Endpoints
+## Base
+* /api
+
+## Account
+* POST `api/account` - Adds a new account to the database
+
+<details>
+<summary>Example body:</summary>
+  
+```js
+{
+  "Username":"JohnDoe",
+  "Password":"123",
+  "People":
+  {
+    "Name":"Darth Vader"
+  }
+}
+```
+  </details>
+
+
+
 ## 28/04-2021
 
 * Vi satt och planerade hur vi ska implementera vår kod och projekt. Vi gjorde två olika Flowcharts.
