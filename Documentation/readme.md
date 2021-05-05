@@ -9,7 +9,8 @@
 POST `api/account` - Adds a new account to the database
 
 <details>
-<summary>Example body:</summary>
+<summary>Example</summary>
+Body: 
   
 ```js
 {
@@ -21,6 +22,7 @@ POST `api/account` - Adds a new account to the database
   }
 }
 ```
+Responses: 
 * Returns Status code 201 (Created) if registration succeded.
 * Returns Status code 401 (Conflict) if username or star wars person already exists.
 * Returns status code 406 (Not acceptable) if star wars person does not exist on `https://swapi.dev/api/people/`.
