@@ -1,5 +1,52 @@
 # Documentation
 
+
+## Endpoints
+### Base
+`/api`
+
+### Account
+POST `api/account` - Adds a new account to the database
+
+<details>
+<summary>Example</summary>
+Body: 
+  
+```js
+{
+  "Username":"JohnDoe",
+  "Password":"123",
+  "People":
+  {
+    "Name":"Darth Vader"
+  }
+}
+```
+Responses: 
+* Returns Status code 201 (Created) if registration succeded.
+* Returns Status code 409 (Conflict) if username or star wars person already exists.
+* Returns Status code 406 (Not acceptable) if star wars person does not exist on the [Star Wars API](https://swapi.dev/api/people/).
+    * This is to ensure you can only register as a star wars character.
+</details>
+
+GET `api/account/{username},{password}` - Used for account validation
+
+<details>
+<summary>Example</summary>
+Body: 
+  
+```js
+{
+  "Username":"JohnDoe",
+  "Password":"123"
+}
+```
+Responses: 
+* Returns Status code 200 (OK) if body matches anything in the database
+* Returns Status code 401 (Unauthorized) if body does not match anything in the database
+</details>
+
+
 ## 28/04-2021
 
 * Vi satt och planerade hur vi ska implementera vår kod och projekt. Vi gjorde två olika Flowcharts.
@@ -48,13 +95,20 @@ upp och ner pilknappen. (Status = Fixed).
 * Fixade till vår kod i console så att det blir färre rader helt enkelt.
 
 ## 03/05-2021
-Vi installerad nuget pakete:
+Vi installerade nuget paketen:
 * Microsoft.EntityFrameworkCore.Design
 * Microsoft.EntityFrameworkCore.SqlServer
 * Microsoft.EntityFrameworkCore.Tools
 
 
-(Skriva om psudo kod och test commitsen)
+(Skriva om psudo kod)
+* Vi skapade ett interface där klasserna SwapiPeople och SwapiStarship implementerar detta. Dessa klasser har vi användt för att skapade ett anrop mot webAPI:en.
+Vi flyttade vår Get() method som vi hade i StarshipController till SwapiStarship istället och döpte om metoden till FetchAll().
+* Vi ska 4 stycken unittest och dessa heter:
+* Fetch_All_Starships_Test() = Testar om vi får alla starships.
+* Fetch_Starships_By_Id_Test() = Test om vi kan hitta den respektive starship genom att skriva in starships ID.
+* Fetch_All_People_Test() = Testar om vi får alla Förararna.
+* Fetch_People_By_ID_Test = Test om vi kan hitta den respektive förare genom att skriva in förerens ID.
 * Skapade ett SpaceContext klass där vi kopplar våra lokala connectionstring för att kunna ansluta oss mot DB:n.
 Därefter la vi ett init migration för att uppdatera vår DB med våra tabeller.
 På bilden nedan ser ni relationerna mellan våra tabeller
