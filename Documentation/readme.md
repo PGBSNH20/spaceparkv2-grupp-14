@@ -47,3 +47,15 @@ med vår StarshipController.
 upp och ner pilknappen. (Status = Fixed).
 * Fixade till vår kod i console så att det blir färre rader helt enkelt.
 
+## 03/05-2021
+Vi installerad nuget pakete:
+* Microsoft.EntityFrameworkCore.Design
+* Microsoft.EntityFrameworkCore.SqlServer
+* Microsoft.EntityFrameworkCore.Tools
+
+
+(Skriva om psudo kod och test commitsen)
+* Skapade ett SpaceContext klass där vi kopplar våra lokala connectionstring för att kunna ansluta oss mot DB:n.
+Därefter la vi ett init migration för att uppdatera vår DB med våra tabeller.
+På bilden nedan ser ni relationerna mellan våra tabeller
+![DBConnection](https://user-images.githubusercontent.com/48633146/117143352-05059280-adb1-11eb-8d9a-ca66da86859b.PNG)
