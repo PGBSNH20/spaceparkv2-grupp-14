@@ -39,3 +39,11 @@ till WebAPI:e. Därefter skickar API:et begäran med det icke-krypterade löseno
 skapas ett entry med förarens namn, användarnamn och ett krypterad lösenord i själva databasen.
 
 ![30 april](https://user-images.githubusercontent.com/48633146/117115805-e510a780-ad8d-11eb-8585-55dbb6c53d9c.png)
+
+## 01/05-2021
+* Vi skapade ett async metod för att hämta alla Starships från WebAPI:et genom vår Starship och StarshipResponse klass i samband
+med vår StarshipController.
+* Minor bugg: ShowMenu metod i vår Menu klass hade vi ett litet problem med där inte kunden inte kunde välja olika alternativ i consoleAppen genom att trycka på
+upp och ner pilknappen. (Status = Fixed).
+* Fixade till vår kod i console så att det blir färre rader helt enkelt.
+
