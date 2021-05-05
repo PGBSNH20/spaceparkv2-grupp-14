@@ -2,10 +2,10 @@
 
 
 ## Endpoints
-## Base
-* /api
+### Base
+`/api`
 
-## Account
+### Account
 POST `api/account` - Adds a new account to the database
 
 <details>
