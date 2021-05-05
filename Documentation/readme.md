@@ -48,13 +48,20 @@ upp och ner pilknappen. (Status = Fixed).
 * Fixade till vår kod i console så att det blir färre rader helt enkelt.
 
 ## 03/05-2021
-Vi installerad nuget pakete:
+Vi installerade nuget paketen:
 * Microsoft.EntityFrameworkCore.Design
 * Microsoft.EntityFrameworkCore.SqlServer
 * Microsoft.EntityFrameworkCore.Tools
 
 
-(Skriva om psudo kod och test commitsen)
+(Skriva om psudo kod)
+* Vi skapade ett interface där klasserna SwapiPeople och SwapiStarship implementerar detta. Dessa klasser har vi användt för att skapade ett anrop mot webAPI:en.
+Vi flyttade vår Get() method som vi hade i StarshipController till SwapiStarship istället och döpte om metoden till FetchAll().
+* Vi ska 4 stycken unittest och dessa heter:
+* Fetch_All_Starships_Test() = Testar om vi får alla starships.
+* Fetch_Starships_By_Id_Test() = Test om vi kan hitta den respektive starship genom att skriva in starships ID.
+* Fetch_All_People_Test() = Testar om vi får alla Förararna.
+* Fetch_People_By_ID_Test = Test om vi kan hitta den respektive förare genom att skriva in förerens ID.
 * Skapade ett SpaceContext klass där vi kopplar våra lokala connectionstring för att kunna ansluta oss mot DB:n.
 Därefter la vi ett init migration för att uppdatera vår DB med våra tabeller.
 På bilden nedan ser ni relationerna mellan våra tabeller
