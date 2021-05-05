@@ -9,7 +9,8 @@ namespace SpaceParkAPI.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public List<Vehicles> Vehicles { get; set; }
+        public int PersonalID { get; set; }
+        //public List<Vehicles> Vehicles { get; set; }
     }
 
 }
