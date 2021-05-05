@@ -6,7 +6,7 @@
 * /api
 
 ## Account
-* POST `api/account` - Adds a new account to the database
+POST `api/account` - Adds a new account to the database
 
 <details>
 <summary>Example body:</summary>
