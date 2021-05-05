@@ -2,7 +2,7 @@
 
 ## 28/04-2021
 
-* Vi satt och planerade hur vi ska implementera vår kod och projekt. Vi Gjorde två olika Flowcharts.
+* Vi satt och planerade hur vi ska implementera vår kod och projekt. Vi gjorde två olika Flowcharts.
 Ena visar hur flowet ser ut när man använder vår program stegvis och det använder är mera 
 fokuserad på kommunikationen mellan Client, API:et och DB:n.
 Vi skapade ett ConsoleApp, WebAPI och la till RestClient Nuget Package.
@@ -23,6 +23,13 @@ lägga till spaceport, nuvarande info gällande parkeringarna.
 Vi skapade några modeller och följe på vår flowchart. Modellerna döpte vi till
 Account, Pay, People, Startship. Vi har skapat några controllers för att kunna kommunicera
 med vår API för att hämta en lista på alla startship, Förare etc.
+* People = Det här klassen är för förarnas information. Det betstår av ID, Name och En lista av Vehicles properties.
+* Vehicles = Det består av ett Id och ett Vehicle property som hämtar vehicle länkarna som en string.
+* Account = Det här klassen består av ID, Username, Password, FK_People där vi kan se vilken förareID som är kopplad till respektive kontot.
+Detta gäller enbart kunder. För Admin har enbart ett inbyggt konto och det har ingen koppling med detta alls.
+* Starship = Innehåller ID, Name, Model, Passengers och det är dem infon vi valde att hämta via vår web api.
+* Pay = Innehåller ID, StartParking, PaidAt, Person och där kan vi se vilken personID som har reggat, betalat och ser start på
+personens startparkeringstid.
 
 ## 30/04-2021
 Nedan här har vi en till flowchart gällande lösenord kryptering. Som ni ser så skickar klienten ett registreringsbegäran
