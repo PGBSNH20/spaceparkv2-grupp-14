@@ -31,6 +31,8 @@ Detta gäller enbart kunder. För Admin har enbart ett inbyggt konto och det har
 * Pay = Innehåller ID, StartParking, PaidAt, Person och där kan vi se vilken personID som har reggat, betalat och ser start på
 personens startparkeringstid.
 
+Vi skapade några Controllers som t.ex. AccountController.
+
 ## 30/04-2021
 Nedan här har vi en till flowchart gällande lösenord kryptering. Som ni ser så skickar klienten ett registreringsbegäran
 till WebAPI:e. Därefter skickar API:et begäran med det icke-krypterade lösenord till Server klienten. Därefter
