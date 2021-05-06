@@ -9,7 +9,7 @@ namespace SpaceParkAPI.Models
     {
         public int ID { get; set; }
         public DateTime StartParking { get; set; }
-        public DateTime PaidAt { get; set; }
-        public People Person { get; set; }
+        public DateTime? PaidAt { get; set; }
+        public string Name { get; set; }
     }
 }
