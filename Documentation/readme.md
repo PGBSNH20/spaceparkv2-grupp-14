@@ -47,6 +47,12 @@ Responses:
 </details>
 
 # Översikt (Kortfattat förklaring kring hur programmet och koden fungerar)
+Via vår consoleapp som är vår entrypoint kan klienten välja att registrera eller logga in. Väljer man
+Register då kan registrera sig genom att knappa in sitt username och lösenord. Därefter kan man välja
+Register Parking för att parkera sitt StartShip. Väljer klienten Log In så kan dem logga in om de knappar
+in rätt user och pass. Därefter kan de betala för sitt parkering och de kan ej registrera för sitt parkering
+om de redan har parkering 1 gång. Klienten kan se parkerings historik, Nuvarande parkeringar. Loggar man in
+som admin kan man tillägga fler SpacePort. 
 
 # Test
 
@@ -56,15 +62,15 @@ Responses:
 
 ## 28/04-2021
 
-* Vi satt och planerade hur vi ska implementera vår kod och projekt. Vi gjorde två olika Flowcharts.
-Ena visar hur flowet ser ut när man använder vår program stegvis och det använder är mera 
+* Vi satt och planerade hur vi ska implementera vår kod och projekt. Vi gjorde några Flowcharts.
+Första visar hur flowet ser ut när man använder vår program stegvis och det andra är mera 
 fokuserad på kommunikationen mellan Client, API:et och DB:n.
 Vi skapade ett ConsoleApp, WebAPI och la till RestClient Nuget Package.
 * ConsoleApp är i princip vår entrypoint där klienten har tillgång till för
 att kunna registrera sig själva, registera parkering och betala för sin parkering.
-Det är också en entrypoint för admin att kunna logga in, se parkeringshistoriken,
+Det är också en entrypoint för klienten att kunna logga in, se parkeringshistoriken,
 lägga till spaceport, nuvarande info gällande parkeringarna.
-* WebAPI:et är i princip vår verktyg för kunna kommunicera mellan klienten och databasen.
+* WebAPI:et är i princip vår verktyg för kunna kommunicera mellan ' och databasen.
 
 # Flowcharts
 #### Menu
