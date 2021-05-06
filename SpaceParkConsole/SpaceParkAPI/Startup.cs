@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SpaceParkAPI.Security;
 
 namespace SpaceParkAPI
 {
@@ -47,6 +48,8 @@ namespace SpaceParkAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            //app.UseMiddleware<ApiMiddleware>();
 
             app.UseAuthorization();
 
