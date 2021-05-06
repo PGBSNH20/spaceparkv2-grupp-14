@@ -1,6 +1,9 @@
-﻿using RestSharp;
+﻿using Newtonsoft.Json;
+using RestSharp;
 using System;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.Json;
 using Newtonsoft.Json;
 using SpaceParkConsole.Models;
@@ -28,5 +31,16 @@ namespace SpaceParkConsole
             }
             Console.ReadLine();
         }
+        //public async static Task<HttpResponseMessage> SendRequest(Uri uri, HttpContent content)
+        //{
+        //    var url = "https://localhost:44332/api/account/Post";
+        //    string json = JsonConvert.SerializeObject("");
+        //    //var httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+        //    var stringContent = new StringContent(json.ToString());
+        //    var client = new RestClient("https://localhost:44332/api/account/");
+        //    HttpResponseMessage response = await client.PostAsync(url, stringContent);
+        //    return response;
+
+        //}
     }
 }

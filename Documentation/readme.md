@@ -6,7 +6,7 @@
 `/api`
 
 ### Account
-POST `api/account` - Adds a new account to the database
+*POST* `api/account` - Adds a new account to the database
 
 <details>
 <summary>Example</summary>
@@ -29,7 +29,7 @@ Responses:
     * This is to ensure you can only register as a star wars character.
 </details>
 
-GET `api/account/{username},{password}` - Used for account validation
+*GET* `api/account/{username},{password}` - Used for account validation
 
 <details>
 <summary>Example</summary>
@@ -46,18 +46,31 @@ Responses:
 * Returns Status code 401 (Unauthorized) if body does not match anything in the database
 </details>
 
+# Översikt (Kortfattat förklaring kring hur programmet och koden fungerar)
+Via vår consoleapp som är vår entrypoint kan klienten välja att registrera eller logga in. Väljer man
+Register då kan registrera sig genom att knappa in sitt username och lösenord. Därefter kan man välja
+Register Parking för att parkera sitt StartShip. Väljer klienten Log In så kan dem logga in om de knappar
+in rätt user och pass. Därefter kan de betala för sitt parkering och de kan ej registrera för sitt parkering
+om de redan har parkering 1 gång. Klienten kan se parkerings historik, Nuvarande parkeringar. Loggar man in
+som admin kan man tillägga fler SpacePort. 
+
+# Test
+
+# Code struktur
+
+# Detaljer (Lite djupare inblick kring hur själva koden fungerar)
 
 ## 28/04-2021
 
-* Vi satt och planerade hur vi ska implementera vår kod och projekt. Vi gjorde två olika Flowcharts.
-Ena visar hur flowet ser ut när man använder vår program stegvis och det använder är mera 
+* Vi satt och planerade hur vi ska implementera vår kod och projekt. Vi gjorde några Flowcharts.
+Första visar hur flowet ser ut när man använder vår program stegvis och det andra är mera 
 fokuserad på kommunikationen mellan Client, API:et och DB:n.
 Vi skapade ett ConsoleApp, WebAPI och la till RestClient Nuget Package.
 * ConsoleApp är i princip vår entrypoint där klienten har tillgång till för
 att kunna registrera sig själva, registera parkering och betala för sin parkering.
-Det är också en entrypoint för admin att kunna logga in, se parkeringshistoriken,
+Det är också en entrypoint för klienten att kunna logga in, se parkeringshistoriken,
 lägga till spaceport, nuvarande info gällande parkeringarna.
-* WebAPI:et är i princip vår verktyg för kunna kommunicera mellan klienten och databasen.
+* WebAPI:et är i princip vår verktyg för kunna kommunicera mellan ' och databasen.
 
 # Flowcharts
 #### Menu
@@ -101,7 +114,7 @@ Vi installerade nuget paketen:
 * Microsoft.EntityFrameworkCore.Tools
 
 
-(Skriva om psudo kod)
+* Vi skrev lite pseudokod för registreringsprocessen. Tanken bakom koden är att om vi ska kunna hitta rätt förarenamn från webAPI:et som ska kunna registrera sig och få ett StatusCode 200 att detta är godkänt annars ska vi få statuscode 404 eftersom att vi ej hittar det namnet i vår webAPI.
 * Vi skapade ett interface där klasserna SwapiPeople och SwapiStarship implementerar detta. Dessa klasser har vi användt för att skapade ett anrop mot webAPI:en.
 Vi flyttade vår Get() method som vi hade i StarshipController till SwapiStarship istället och döpte om metoden till FetchAll().
 * Vi ska 4 stycken unittest och dessa heter:
@@ -113,3 +126,6 @@ Vi flyttade vår Get() method som vi hade i StarshipController till SwapiStarshi
 Därefter la vi ett init migration för att uppdatera vår DB med våra tabeller.
 På bilden nedan ser ni relationerna mellan våra tabeller
 ![DBConnection](https://user-images.githubusercontent.com/48633146/117143352-05059280-adb1-11eb-8d9a-ca66da86859b.PNG)
+
+## 04/05-2021
+Skapade ett init migration med db:n som vi har och pushade upp koden. Misslyckades med att kunna använda mig utav docker-compose. Så vi körde DB:n lokalt.

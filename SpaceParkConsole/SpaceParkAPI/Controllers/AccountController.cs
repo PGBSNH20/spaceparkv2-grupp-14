@@ -33,7 +33,7 @@ namespace SpaceParkAPI.Controllers
 
                     return Ok("Logged in successfully!");
                 }
-                catch (InvalidOperationException) 
+                catch (InvalidOperationException)
                 {
                     return Unauthorized("Invalid login parameters.");
                 }
