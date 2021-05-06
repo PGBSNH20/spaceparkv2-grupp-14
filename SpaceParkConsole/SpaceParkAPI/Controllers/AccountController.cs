@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using SpaceParkAPI.Database;
 using SpaceParkAPI.Models;
 using System;
@@ -14,37 +15,36 @@ using SpaceParkAPI.Swapi;
 
 namespace SpaceParkAPI.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
         // GET api/<AccountController>/5
         [HttpGet("{username},{password}")]
-        public async Task<HttpResponseMessage> Get(string username, string password)
+        public async Task<IActionResult> Get(string username, string password)
         {
-            HttpResponseMessage response = new HttpResponseMessage();
             using (var db = new SpaceContext())
             {
                 try
                 {
-                    var acc = db.Accounts.First(x => x.Username.ToLower() == username.ToLower()
+                    var acc = db.Accounts.First(x => 
+                        x.Username.ToLower() == username.ToLower()
                         && Encryption.Encrypt(password) == x.Password);
 
-                    response.StatusCode = HttpStatusCode.OK;
-                    response.ReasonPhrase = "Log in success.";
+                    return Ok("Logged in successfully!");
                 }
                 catch (InvalidOperationException) 
                 {
-                    response.StatusCode = HttpStatusCode.Unauthorized;
-                    response.ReasonPhrase = "Invalid login parameters.";
+                    return Unauthorized("Invalid login parameters.");
                 }
             }
-            return response;
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         // POST api/<AccountController>
         [HttpPost]
-        public async Task<HttpResponseMessage> Post([FromBody] Account value)
+        public async Task<IActionResult> Post([FromBody] Account value)
         {
             var ppl = new SwapiPeople();
             var result = await ppl.FetchAll();
@@ -52,34 +52,21 @@ namespace SpaceParkAPI.Controllers
 
             using (var db = new SpaceContext())
             {
-                try
+                if (db.Accounts.Any(x => x.Username == value.Username))
                 {
-                    Account acc = db.Accounts.First(x => x.Username == value.Username);
-
-                    return new HttpResponseMessage()
-                    {
-                        StatusCode = HttpStatusCode.Conflict,
-                        ReasonPhrase = $"Account with username {value.Username} already exists!"
-                    };
+                    return Conflict($"Account with username {value.Username} already exists!");
                 }
-                catch(InvalidOperationException)
-                {
-                }
-
                 if (person != null)
                 {
                     value.People.PersonalID = result.IndexOf(person) + 1;
                     value.Password = Encryption.Encrypt(value.Password);
                     db.Accounts.Add(value);
                     db.SaveChanges();
-                    return new HttpResponseMessage(HttpStatusCode.Created);
-
+                    return StatusCode(StatusCodes.Status201Created, "Account registered!");
                 }
                 else
                 {
-                    HttpResponseMessage msg = new HttpResponseMessage(HttpStatusCode.NotAcceptable);
-                    msg.ReasonPhrase = $"{value.People.Name} is not a valid Star Wars character, see https://swapi.dev/api/people/ for all valid characters.";
-                    return msg;
+                    return StatusCode(StatusCodes.Status406NotAcceptable, $"{value.People.Name} is not a valid Star Wars character, see https://swapi.dev/api/people/ for all valid characters.");
                 }
             }
         }
