@@ -101,7 +101,7 @@ Vi installerade nuget paketen:
 * Microsoft.EntityFrameworkCore.Tools
 
 
-(Skriva om psudo kod)
+* Vi skrev lite pseudokod för registreringsprocessen. Tanken bakom koden är att om vi ska kunna hitta rätt förarenamn från webAPI:et som ska kunna registrera sig och få ett StatusCode 200 att detta är godkänt annars ska vi få statuscode 404 eftersom att vi ej hittar det namnet i vår webAPI.
 * Vi skapade ett interface där klasserna SwapiPeople och SwapiStarship implementerar detta. Dessa klasser har vi användt för att skapade ett anrop mot webAPI:en.
 Vi flyttade vår Get() method som vi hade i StarshipController till SwapiStarship istället och döpte om metoden till FetchAll().
 * Vi ska 4 stycken unittest och dessa heter:
@@ -113,3 +113,6 @@ Vi flyttade vår Get() method som vi hade i StarshipController till SwapiStarshi
 Därefter la vi ett init migration för att uppdatera vår DB med våra tabeller.
 På bilden nedan ser ni relationerna mellan våra tabeller
 ![DBConnection](https://user-images.githubusercontent.com/48633146/117143352-05059280-adb1-11eb-8d9a-ca66da86859b.PNG)
+
+## 04/05-2021
+Skapade ett init migration med db:n som vi har och pushade upp koden. Misslyckades med att kunna använda mig utav docker-compose. Så vi körde DB:n lokalt.
