@@ -33,7 +33,7 @@ namespace SpaceParkAPI.Controllers
                     response.StatusCode = HttpStatusCode.OK;
                     response.ReasonPhrase = "Log in success.";
                 }
-                catch (InvalidOperationException) 
+                catch (InvalidOperationException)
                 {
                     response.StatusCode = HttpStatusCode.Unauthorized;
                     response.ReasonPhrase = "Invalid login parameters.";
@@ -62,7 +62,7 @@ namespace SpaceParkAPI.Controllers
                         ReasonPhrase = $"Account with username {value.Username} already exists!"
                     };
                 }
-                catch(InvalidOperationException)
+                catch (InvalidOperationException)
                 {
                 }
 
