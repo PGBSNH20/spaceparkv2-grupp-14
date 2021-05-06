@@ -2,11 +2,16 @@
 using System;
 using System.Net.Http;
 using System.Text.Json;
+using Newtonsoft.Json;
+using SpaceParkConsole.Models;
+using System.Net;
 
 namespace SpaceParkConsole
 {
     class Program
     {
+        static Account _Account;
+
         static void Main(string[] args)
         {
             var logInChoice = new string[] { "Register", "Log in" };
@@ -15,39 +20,13 @@ namespace SpaceParkConsole
 
             if (option.ToString() == logInChoice[0])
             {
-                var username = Menu.RequestUserInput("Register your username!");
-                var password = Menu.RequestUserInput("Register your password!");
-                var realname = Menu.RequestUserInput("Input your Star Wars name!");
-                //HttpClient client = new HttpClient("localhost:xxx");
-                //HttpStatusCode code = client.SendAsync(username, password, realname).Response;
-                //if(code == 200) Console.WriteLine("Successfully registered");
-                //else if(code == 404) Console.WriteLine("No person with name {realname} found");
-
-                Console.WriteLine("Registration complete!");
-                Console.ReadLine();
-                var parkOption = Menu.ShowMenu("Welcome", parkingChoice);
-                if (parkOption.ToString() == parkingChoice[0])
+                Account account = null;
+                while (account == null)
                 {
-                    //HttpClient client = new HttpClient("localhost:xxx");
-                    //HttpStatusCode code = client.SendAsync(username, password, realname).Response;
-                    //if(code == 200) Console.WriteLine("Successfully registered");
-                    //else if(code == 404) Console.WriteLine("No person with name {realname} found");
-                }
-                else if (parkOption.ToString() == parkingChoice[1])
-                {
-
-                }
-                else if (parkOption.ToString() == parkingChoice[2])
-                {
-                    Console.WriteLine("Thank you, goodbye");
+                    account = AccountHelper.RegisterPrompt();
                 }
             }
-            else
-            {
-                //Docker inkludering här med. Behöver manuellt lägga in ett admin konto.
-                var username = Menu.RequestUserInput("Enter username!");
-                var password = Menu.RequestUserInput("Enter password!");
-            }
+            Console.ReadLine();
         }
     }
 }
