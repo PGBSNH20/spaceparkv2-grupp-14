@@ -46,6 +46,13 @@ Responses:
 * Returns Status code 401 (Unauthorized) if body does not match anything in the database
 </details>
 
+# Översikt (Kortfattat förklaring kring hur programmet och koden fungerar)
+
+# Test
+
+# Code struktur
+
+# Detaljer (Lite djupare inblick kring hur själva koden fungerar)
 
 ## 28/04-2021
 
