@@ -1,12 +1,12 @@
 # Documentation
 
 ## Innehållsförteckning
-1.Endpoints
-2.Översikt
-3.Test
-4.Code struktur
-5.Detaljer
-6.Daglig rapport (Kan istället skriva hur långt tid tog vissa grejer mer än dem andra)
+1. Endpoints
+2. Översikt
+3. Test
+4. Code struktur
+5. Detaljer
+6. Daglig rapport (Kan istället skriva hur långt tid tog vissa grejer mer än dem andra)
 
 ## Endpoints
 ### Base
