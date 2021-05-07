@@ -314,6 +314,13 @@ Därefter la vi ett init migration för att uppdatera vår DB med våra tabeller
 På bilden nedan ser ni relationerna mellan våra tabeller
 ![DBConnection](https://user-images.githubusercontent.com/48633146/117143352-05059280-adb1-11eb-8d9a-ca66da86859b.PNG)
 
+## API Test 
+
+För att kunna testa våran API end point: 
+* Starta programmet i dubug lägge
+* Navigrea till https://localhost:5001/swagger/index.html
+* Du kommer fram till en swager sida med alla end-point där man kan se respons objekt. 
+
 ## Slutet
 
 I slutet märkte vi att vi hade lite för många tabeller och såg att vi inte hade t.ex. ett behov av Vehicle tabellen. Eftersom att Infon i Vehicle och
