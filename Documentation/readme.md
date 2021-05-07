@@ -89,7 +89,6 @@ fokuserad på kommunikationen mellan Client, API:et och DB:n.
 
 # Code Struktur
 
-## Registrering
 När en klient knappar in ett username, password och ett korrekt förarenamn så skickar vi detta
 till vår Register metod som skapar en Post Request till vår Accountcroller.
 
