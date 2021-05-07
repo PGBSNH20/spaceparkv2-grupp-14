@@ -183,6 +183,7 @@ Det inloggade klienten kan betala för sitt parkering och det kan vi ske om enli
 Om samma Person har med samma Id har fortfarande ej betalat för sin parkering så kan dem betala det.
 Med andra ord om vår PaidAt property i vår Pay tabell är Null så kan dem betala annars får dem felmeddelande
 om att Parkeringen är redan betald.
+
 ```csharp
 [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id)
@@ -251,51 +252,56 @@ Testet nedan ser till att Rätt ID är förknippat med rätt förarenamn.
 ```
 
 
-# Detaljer (Lite djupare inblick kring hur själva koden fungerar)
+# Detaljer
+Vi har en extra säkerhetsdetalj där vi enkrytar passwords:en som förs in i DB:n och det har vi gjort genom att skapa ett 
+Encryption klass som ni ser nedan:
+Encrypt() metoden i klassen enkryptar passworden som vi matar. 
+```csharp
+public class Encryption
+    {
+        public static string Encrypt(string str)
+        {
+            string result = string.Empty;
 
-## Daglig rapport
-## 28/04-2021
+            for(int i = 0; i < str.Length; i++)
+            {
+                if (str[i] < 120)
+                    result += Convert.ToChar(str[i] + 7);
+                else
+                    result += str[i];
+            }
+        }
+    }
+```
+Detta används i t.ex. vår Get() method i vår AccountController som ni ser nedan:
+```csharp
+using (var db = new SpaceContext())
+            {
+                try
+                {
+                    var acc = db.Accounts.First(x => 
+                        x.Username.ToLower() == username.ToLower()
+                        && Encryption.Encrypt(password) == x.Password);
 
-
-
-
-
-## 29/04-2021
-Vi skapade några modeller och följe på vår flowchart. Modellerna döpte vi till
-Account, Pay, People, Startship. Vi har skapat några controllers för att kunna kommunicera
-med vår API för att hämta en lista på alla startship, Förare etc.
-* People = Det här klassen är för förarnas information. Det betstår av ID, Name och En lista av Vehicles properties.
-* Vehicles = Det består av ett Id och ett Vehicle property som hämtar vehicle länkarna som en string.
-* Account = Det här klassen består av ID, Username, Password, FK_People där vi kan se vilken förareID som är kopplad till respektive kontot.
-Detta gäller enbart kunder. För Admin har enbart ett inbyggt konto och det har ingen koppling med detta alls.
-* Starship = Innehåller ID, Name, Model, Passengers och det är dem infon vi valde att hämta via vår web api.
-* Pay = Innehåller ID, StartParking, PaidAt, Person och där kan vi se vilken personID som har reggat, betalat och ser start på
-personens startparkeringstid.
-
-Vi skapade några Controllers som t.ex. AccountController.
-
-## 30/04-2021
+                    return Ok("Logged in successfully!");
+                }
+                catch (InvalidOperationException)
+                {
+                    return Unauthorized("Invalid login parameters.");
+                }
+            }
+```
 Nedan här har vi en till flowchart gällande lösenord kryptering. Som ni ser så skickar klienten ett registreringsbegäran
 till WebAPI:e. Därefter skickar API:et begäran med det icke-krypterade lösenord till Server klienten. Därefter
 skapas ett entry med förarens namn, användarnamn och ett krypterad lösenord i själva databasen.
 
 ![30 april](https://user-images.githubusercontent.com/48633146/117115805-e510a780-ad8d-11eb-8585-55dbb6c53d9c.png)
 
-## 01/05-2021
-* Vi skapade ett async metod för att hämta alla Starships från WebAPI:et genom vår Starship och StarshipResponse klass i samband
-med vår StarshipController.
-* Minor bugg: ShowMenu metod i vår Menu klass hade vi ett litet problem med där inte kunden inte kunde välja olika alternativ i consoleAppen genom att trycka på
-upp och ner pilknappen. (Status = Fixed).
-* Fixade till vår kod i console så att det blir färre rader helt enkelt.
+# Misstag som vi ändrade under processen
 
-## 03/05-2021
-Vi installerade nuget paketen:
-* Microsoft.EntityFrameworkCore.Design
-* Microsoft.EntityFrameworkCore.SqlServer
-* Microsoft.EntityFrameworkCore.Tools
-
-
-* Vi skrev lite pseudokod för registreringsprocessen. Tanken bakom koden är att om vi ska kunna hitta rätt förarenamn från webAPI:et som ska kunna registrera sig och få ett StatusCode 200 att detta är godkänt annars ska vi få statuscode 404 eftersom att vi ej hittar det namnet i vår webAPI.
+## Början
+Från början skrev vi lite pseudokod för registreringsprocessen. Tanken bakom koden är att om vi ska kunna hitta rätt förarenamn 
+från webAPI:et som ska kunna registrera sig och få ett StatusCode 200 att detta är godkänt annars ska vi få statuscode 404 eftersom att vi ej hittar det namnet i vår webAPI.
 * Vi skapade ett interface där klasserna SwapiPeople och SwapiStarship implementerar detta. Dessa klasser har vi användt för att skapade ett anrop mot webAPI:en.
 Vi flyttade vår Get() method som vi hade i StarshipController till SwapiStarship istället och döpte om metoden till FetchAll().
 * Vi ska 4 stycken unittest och dessa heter:
@@ -308,5 +314,8 @@ Därefter la vi ett init migration för att uppdatera vår DB med våra tabeller
 På bilden nedan ser ni relationerna mellan våra tabeller
 ![DBConnection](https://user-images.githubusercontent.com/48633146/117143352-05059280-adb1-11eb-8d9a-ca66da86859b.PNG)
 
-## 04/05-2021
-Skapade ett init migration med db:n som vi har och pushade upp koden. Misslyckades med att kunna använda mig utav docker-compose. Så vi körde DB:n lokalt.
+##Slutet
+
+I slutet märkte vi att vi hade lite för många tabeller och såg att vi inte hade t.ex. ett behov av Vehicle tabellen. Eftersom att Infon i Vehicle och
+Starship var ganska lika om de propertiesen vi behövde kunde vi hämta från båda tabellerna. Därefter insåg vi att vi inte ens behövde ha Starship tabellen
+över lag och vår slutliga DB tabelln kan ni på bilden nedan:
