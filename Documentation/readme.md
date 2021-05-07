@@ -60,11 +60,11 @@ Responses:
 Vi satt och planerade hur vi ska implementera vår kod och projekt och två flowchart som har beskrivit om lite längre 
 ner i vår Översikt beskrivning. 
 Vi skapade ett ConsoleApp, WebAPI och la till RestClient Nuget Package.
-1.ConsoleApp är i princip vår entrypoint där klienten har tillgång till för
+1. ConsoleApp är i princip vår entrypoint där klienten har tillgång till för
 att kunna registrera sig själva, registera parkering och betala för sin parkering.
 Det är också en entrypoint för klienten att kunna logga in, se parkeringshistoriken,
 lägga till spaceport, nuvarande info gällande parkeringarna.
-2.WebAPI:et är i princip vår verktyg för kunna kommunicera mellan klienten och databasen.
+2. WebAPI:et är i princip vår verktyg för kunna kommunicera mellan klienten och databasen.
 
 Via vår consoleapp som är vår entrypoint kan klienten välja att registrera eller logga in eller Exit. Väljer man
 Register då kan registrera sig genom att knappa in sitt username och lösenord. Därefter kan man välja
