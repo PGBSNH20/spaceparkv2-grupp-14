@@ -314,7 +314,7 @@ Därefter la vi ett init migration för att uppdatera vår DB med våra tabeller
 På bilden nedan ser ni relationerna mellan våra tabeller
 ![DBConnection](https://user-images.githubusercontent.com/48633146/117143352-05059280-adb1-11eb-8d9a-ca66da86859b.PNG)
 
-##Slutet
+## Slutet
 
 I slutet märkte vi att vi hade lite för många tabeller och såg att vi inte hade t.ex. ett behov av Vehicle tabellen. Eftersom att Infon i Vehicle och
 Starship var ganska lika om de propertiesen vi behövde kunde vi hämta från båda tabellerna. Därefter insåg vi att vi inte ens behövde ha Starship tabellen
