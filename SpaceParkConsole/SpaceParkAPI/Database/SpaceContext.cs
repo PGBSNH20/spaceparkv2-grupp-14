@@ -12,6 +12,7 @@ namespace SpaceParkAPI.Database
         private const string connectionString = "Data source=LAPTOP-45O2J506;Database=ParkingSpaceVersion2;Trusted_Connection=True;";
         public DbSet<Pay> Pay { get; set; }
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<SpacePort> SpacePorts { get; set; }
         public SpaceContext() : base()
         {
 

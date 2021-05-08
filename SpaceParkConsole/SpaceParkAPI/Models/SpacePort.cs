@@ -8,6 +8,6 @@ namespace SpaceParkAPI.Models
     public class SpacePort
     {
         public int ID { get; set; }
-        public string Slots { get; set; }
+        public int Slots { get; set; } = 0;
     }
 }

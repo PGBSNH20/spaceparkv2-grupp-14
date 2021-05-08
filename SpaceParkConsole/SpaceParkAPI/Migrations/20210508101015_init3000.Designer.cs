@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SpaceParkAPI.Database;
 
 namespace SpaceParkAPI.Migrations
 {
     [DbContext(typeof(SpaceContext))]
-    partial class SpaceContextModelSnapshot : ModelSnapshot
+    [Migration("20210508101015_init3000")]
+    partial class init3000
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,15 +57,10 @@ namespace SpaceParkAPI.Migrations
                     b.Property<DateTime?>("PaidAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("SpacePortID")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("StartParking")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("SpacePortID");
 
                     b.ToTable("Pay");
                 });
@@ -86,21 +83,6 @@ namespace SpaceParkAPI.Migrations
                     b.ToTable("People");
                 });
 
-            modelBuilder.Entity("SpaceParkAPI.Models.SpacePort", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Slots")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("SpacePorts");
-                });
-
             modelBuilder.Entity("SpaceParkAPI.Models.Account", b =>
                 {
                     b.HasOne("SpaceParkAPI.Models.People", "People")
@@ -108,15 +90,6 @@ namespace SpaceParkAPI.Migrations
                         .HasForeignKey("PeopleID");
 
                     b.Navigation("People");
-                });
-
-            modelBuilder.Entity("SpaceParkAPI.Models.Pay", b =>
-                {
-                    b.HasOne("SpaceParkAPI.Models.SpacePort", "SpacePort")
-                        .WithMany()
-                        .HasForeignKey("SpacePortID");
-
-                    b.Navigation("SpacePort");
                 });
 #pragma warning restore 612, 618
         }

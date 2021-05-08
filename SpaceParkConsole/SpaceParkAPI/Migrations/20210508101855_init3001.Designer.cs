@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SpaceParkAPI.Database;
 
 namespace SpaceParkAPI.Migrations
 {
     [DbContext(typeof(SpaceContext))]
-    partial class SpaceContextModelSnapshot : ModelSnapshot
+    [Migration("20210508101855_init3001")]
+    partial class init3001
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

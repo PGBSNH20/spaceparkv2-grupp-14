@@ -37,12 +37,12 @@ namespace SpaceParkAPI.Controllers
         [HttpGet("{name}")]
         public async Task<IActionResult> Get(string name)
         {
-            using(var db = new SpaceContext())
+            using (var db = new SpaceContext())
             {
-                var result = db.Pay.Where(x => 
+                var result = db.Pay.Where(x =>
                     x.Name.ToLower() == name.ToLower());
 
-                if(result.Count() == 0)
+                if (result.Count() == 0)
                 {
                     return BadRequest();
                 }
@@ -56,19 +56,30 @@ namespace SpaceParkAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Pay park)
         {
-            using(var db = new SpaceContext())
+            using (var db = new SpaceContext())
             {
-                if(db.Pay.Any(x => x.Name == park.Name && x.PaidAt == null))
+                if (db.SpacePorts.Where(x => x.ID == park.SpacePort.ID && park.SpacePort.Slots <= 5))
                 {
-                    return Conflict("Your account already has one unpaid parking at the moment. To resolve this, pay and retry parking.");
+
+
+                    if (db.Pay.Any(x => x.Name == park.Name && x.PaidAt == null))
+                    {
+                        park.SpacePort.Slots++;
+                        return Conflict("Your account already has one unpaid parking at the moment. To resolve this, pay and retry parking.");
+                    }
+                    else
+                    {
+                        park.PaidAt = null;
+                        db.Pay.Add(park);
+                        db.SaveChanges();
+
+                        return StatusCode(StatusCodes.Status201Created, "Your parking has been registered!");
+                    }
+
                 }
                 else
                 {
-                    park.PaidAt = null;
-                    db.Pay.Add(park);
-                    db.SaveChanges();
-
-                    return StatusCode(StatusCodes.Status201Created, "Your parking has been registered!");
+                    return Conflict($"The following Spaceport {park.SpacePort.Slots} is at it's max limit!");
                 }
             }
         }
@@ -77,7 +88,7 @@ namespace SpaceParkAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id)
         {
-            using(var db = new SpaceContext())
+            using (var db = new SpaceContext())
             {
                 try
                 {
@@ -94,7 +105,7 @@ namespace SpaceParkAPI.Controllers
                         return Conflict($"Parking with id [{id}] has already been paid");
                     }
                 }
-                catch(InvalidOperationException)
+                catch (InvalidOperationException)
                 {
                     return NotFound($"No parking with id [{id}] exists.");
                 }

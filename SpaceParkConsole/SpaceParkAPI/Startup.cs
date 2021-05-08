@@ -49,10 +49,10 @@ namespace SpaceParkAPI
 
             app.UseRouting();
 
-            //app.UseMiddleware<ApiMiddleware>();
-
             app.UseAuthorization();
 
+            //app.UseMiddleware<ApiMiddleware>();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

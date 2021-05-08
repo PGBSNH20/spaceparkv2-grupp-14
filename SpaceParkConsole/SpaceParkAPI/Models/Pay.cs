@@ -11,5 +11,6 @@ namespace SpaceParkAPI.Models
         public DateTime StartParking { get; set; }
         public DateTime? PaidAt { get; set; }
         public string Name { get; set; }
+        public SpacePort SpacePort { get; set; }
     }
 }
