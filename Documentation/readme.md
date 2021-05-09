@@ -54,17 +54,10 @@ Responses:
 </details>
 
 ### Park
-*GET* `api/park` - Fetches a parking history for the specified account from the body
+*GET* `api/park` - Fetches a parking history for all accounts 
 
 <details>
 <summary>Example</summary>
-Body:
-  
-```js
-{
-  "Name":"abc123"
-}
-```
 Responses: 
 * Returns Status code 200 (OK) api key is authorized to see history
 * Returns Status code 401 (Unauthorized) if specified API key is not authorized to view parking history
