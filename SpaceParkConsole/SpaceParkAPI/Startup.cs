@@ -52,7 +52,7 @@ namespace SpaceParkAPI
             app.UseAuthorization();
 
             //app.UseMiddleware<ApiMiddleware>();
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

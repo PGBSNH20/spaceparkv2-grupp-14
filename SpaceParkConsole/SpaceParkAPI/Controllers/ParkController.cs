@@ -11,6 +11,7 @@ using SpaceParkAPI.Database;
 using Newtonsoft.Json;
 using SpaceParkAPI.Swapi;
 using System.Text;
+using SpaceParkAPI.Security;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,6 +19,7 @@ namespace SpaceParkAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiMiddleware]
     public class ParkController : ControllerBase
     {
         [HttpGet]
@@ -58,13 +60,13 @@ namespace SpaceParkAPI.Controllers
         {
             using (var db = new SpaceContext())
             {
-                if (db.SpacePorts.Where(x => x.ID == park.SpacePort.ID && park.SpacePort.Slots <= 5))
-                {
-
-
+                //var p = db.Pay.Where(x => x.ID == park.ID).Select(x => x.SpacePort.Slots < 5).First();
+                //db.SpacePorts.First(x => x.ID == park.ID).Select(x => x.Slots < 5)
+                //if (db.Pay.Where(x => x.ID == park.ID).Select(x => x.SpacePort.Slots < 5).First())
+                //{
                     if (db.Pay.Any(x => x.Name == park.Name && x.PaidAt == null))
                     {
-                        park.SpacePort.Slots++;
+                        //park.SpacePort.Slots++;
                         return Conflict("Your account already has one unpaid parking at the moment. To resolve this, pay and retry parking.");
                     }
                     else
@@ -76,11 +78,11 @@ namespace SpaceParkAPI.Controllers
                         return StatusCode(StatusCodes.Status201Created, "Your parking has been registered!");
                     }
 
-                }
-                else
-                {
-                    return Conflict($"The following Spaceport {park.SpacePort.Slots} is at it's max limit!");
-                }
+                //}
+                //else
+                //{
+                //    return Conflict($"The following Spaceport {park.SpacePort.Slots} is at it's max limit!");
+                //}
             }
         }
 

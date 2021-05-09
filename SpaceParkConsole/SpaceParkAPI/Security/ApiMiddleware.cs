@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 
 namespace SpaceParkAPI.Security
-{
+{ 
     [AttributeUsage(validOn: AttributeTargets.Class)]
     public class ApiMiddleware : Attribute, IAsyncActionFilter
     {

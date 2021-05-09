@@ -17,6 +17,7 @@ namespace SpaceParkAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiMiddleware]
     public class AccountController : ControllerBase
     {
         // GET api/<AccountController>/5
