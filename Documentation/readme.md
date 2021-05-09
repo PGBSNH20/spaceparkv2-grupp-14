@@ -53,7 +53,49 @@ Responses:
 * Returns Status code 401 (Unauthorized) if body does not match anything in the database
 </details>
 
+### Park
+*POST* `api/park` - Adds a new park entry to the database
 
+<details>
+<summary>Example</summary>
+Body:
+  
+```js
+{
+  "StartParking":"2021-05-09 14:33:24",
+  "PaidAt":null,
+  "Name":"Luke Skywalker",
+  "SpacePort": 
+    {
+      "ID":1
+    }
+}
+```
+Responses: 
+* Returns Status code 201 (Created) if parking was accepted and registered
+* Returns Status code 409 (Conflict) if person has unpaid parking already registered or spaceport is at max limit
+</details>
+
+*PUT* `api/park` - Updates a parking entry (used for payment)
+
+<details>
+<summary>Example</summary>
+Body:
+  
+```js
+  "ID":1"
+  "PaidAt":"2021-05-09 19:46:33"
+  "SpacePort": 
+    {
+      "ID":1
+    }
+}
+```
+Responses: 
+* Returns Status code 200 (OK) if parking was successfully paid for
+* Returns Status code 409 (Conflict) if parking has already been paid for before
+* Returns status code 404 (NotFound) if parking with ID "x" is not found
+</details>
 
 # Översikt
 
