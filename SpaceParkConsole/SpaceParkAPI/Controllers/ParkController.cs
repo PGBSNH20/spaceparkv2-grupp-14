@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using SpaceParkAPI.Swapi;
 using System.Text;
 using SpaceParkAPI.Security;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,17 +23,19 @@ namespace SpaceParkAPI.Controllers
     public class ParkController : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> Get(Account account)
+        public async Task<IActionResult> Get()
         {
-            if (account.Username.ToLower() == "admin")
+            using (var db = new SpaceContext())
             {
-                using (var db = new SpaceContext())
-                {
-                    var json = JsonConvert.SerializeObject(db.Pay);
-                    return Ok(json);
-                }
+                var json = JsonConvert.SerializeObject(db.Pay);
+                return Ok(json);
             }
-            else return Unauthorized("Only a system administrator can view the full parking history.");
+
+            //if (account.Username.ToLower() == "admin")
+            //{
+            //    
+            //}
+            //else return Unauthorized("Only a system administrator can view the full parking history.");
         }
         // GET api/<ParkController>/5
         [HttpGet("{name}")]
@@ -59,29 +62,36 @@ namespace SpaceParkAPI.Controllers
         {
             using (var db = new SpaceContext())
             {
-                //var p = db.Pay.Where(x => x.ID == park.ID).Select(x => x.SpacePort.Slots < 5).First();
-                //db.SpacePorts.First(x => x.ID == park.ID).Select(x => x.Slots < 5)
-                //if (db.Pay.Where(x => x.ID == park.ID).Select(x => x.SpacePort.Slots < 5).First())
-                //{
+                //var local = db.Set<Pay>()
+                //    .Local
+                //    .FirstOrDefault(entry => entry.ID.Equals(park.ID));
+                var port = db.SpacePorts.Find(park.SpacePort.ID);
+                
+                if (port.Slots < 5)
+                {
                     if (db.Pay.Any(x => x.Name == park.Name && x.PaidAt == null))
                     {
-                        //park.SpacePort.Slots++;
                         return Conflict("Your account already has one unpaid parking at the moment. To resolve this, pay and retry parking.");
                     }
                     else
                     {
-                        park.PaidAt = null;
-                        db.Pay.Add(park);
-                        db.SaveChanges();
-
+                        if (park != null)
+                        {
+                            port.Slots++;
+                            park.PaidAt = null;
+                            db.Entry(port).State = EntityState.Detached;
+                            db.SpacePorts.Add(port);
+                            db.SaveChanges(); 
+                        }
+                        db.Entry(port).State = EntityState.Modified;
                         return StatusCode(StatusCodes.Status201Created, "Your parking has been registered!");
                     }
 
-                //}
-                //else
-                //{
-                //    return Conflict($"The following Spaceport {park.SpacePort.Slots} is at it's max limit!");
-                //}
+                }
+                else
+                {
+                    return Conflict($"The following Spaceport {park.SpacePort.Slots} is at it's max limit!");
+                }
             }
         }
 
