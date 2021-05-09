@@ -59,6 +59,7 @@ Responses:
 <details>
 <summary>Example</summary>
 Responses: 
+  
 * Returns Status code 200 (OK) api key is authorized to see history
 * Returns Status code 401 (Unauthorized) if specified API key is not authorized to view parking history
 
