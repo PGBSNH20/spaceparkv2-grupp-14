@@ -10,36 +10,36 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 
 namespace SpaceParkAPI.Security
-{ 
-    [AttributeUsage(validOn: AttributeTargets.Class)]
-    public class ApiMiddleware : Attribute, IAsyncActionFilter
+{
+    public class ApiMiddleware
     {
-        private const string APIKey = "ApiKey";
-        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        private readonly RequestDelegate _next;
+        private const string APIKEYNAME = "ApiKey";
+        public ApiMiddleware(RequestDelegate next)
         {
-            if (!context.HttpContext.Request.Headers.TryGetValue(APIKey, out var extractedApiKey))
+            _next = next;
+        }
+        public async Task InvokeAsync(HttpContext context)
+        {
+            if (!context.Request.Headers.TryGetValue(APIKEYNAME, out var extractedApiKey))
             {
-                context.Result = new ContentResult()
-                {
-                    StatusCode = 401,
-                    Content = "Api Key was not provided"
-                };
-
+                context.Response.StatusCode = 401;
+                await context.Response.WriteAsync("Api Key was not provided. (Using ApiKeyMiddleware) ");
                 return;
             }
-            var appSettings = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
-            var apiKey = appSettings.GetValue<string>(APIKey);
+
+            var appSettings = context.RequestServices.GetRequiredService<IConfiguration>();
+
+            var apiKey = appSettings.GetValue<string>(APIKEYNAME);
 
             if (!apiKey.Equals(extractedApiKey))
             {
-                context.Result = new ContentResult()
-                {
-                    StatusCode = 401,
-                    Content = "Api Key is not valid"
-                };
+                context.Response.StatusCode = 401;
+                await context.Response.WriteAsync("Unauthorized client. (Using ApiKeyMiddleware)");
                 return;
             }
-            await next();
+
+            await _next(context);
         }
     }
 }

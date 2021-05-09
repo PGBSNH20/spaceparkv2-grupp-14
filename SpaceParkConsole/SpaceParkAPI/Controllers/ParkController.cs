@@ -19,7 +19,6 @@ namespace SpaceParkAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ApiMiddleware]
     public class ParkController : ControllerBase
     {
         [HttpGet]
