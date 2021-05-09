@@ -54,6 +54,23 @@ Responses:
 </details>
 
 ### Park
+*GET* `api/park` - Fetches a parking history for the specified account from the body
+
+<details>
+<summary>Example</summary>
+Body:
+  
+```js
+{
+  "Name":"abc123"
+}
+```
+Responses: 
+* Returns Status code 200 (OK) api key is authorized to see history
+* Returns Status code 401 (Unauthorized) if specified API key is not authorized to view parking history
+
+</details>
+
 *POST* `api/park` - Adds a new park entry to the database
 
 <details>
@@ -83,7 +100,7 @@ Responses:
 Body:
   
 ```js
-  "ID":1"
+  "ID":1
   "PaidAt":"2021-05-09 19:46:33"
   "SpacePort": 
     {
