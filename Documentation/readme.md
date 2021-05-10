@@ -3,10 +3,12 @@
 ## Innehållsförteckning
 1. Endpoints
 2. Översikt
-3. Test
-4. Code struktur
-5. Detaljer
-6. Daglig rapport (Kan istället skriva hur långt tid tog vissa grejer mer än dem andra)
+3. Code struktur
+4. Custom Middleware
+5. Test
+6. Detaljer
+7. Utvecklare Api
+8. Misstag som vi ändrade under processen
 
 ## Endpoints
 ### Base
@@ -276,6 +278,85 @@ kan man göra allt som kunderna också kan plus att de har ett ytteligare altern
 Pay tabellen i vår DB är kopplat till Spaceport klassen som vi har skapat och i varje Spaceport kan 
 max 5 Starships parkeras.
 
+# Custom Middleware
+
+Vi gjorde ett custom Middleware där vi säkrade alla våra controllers när vi ska anropa på något.
+Det gjorde vi genom att skapa en ApiMiddleware class.
+
+```csharp
+private readonly RequestDelegate _next;
+        private const string APIKEYNAME = "ApiKey";
+        public ApiMiddleware(RequestDelegate next)
+        {
+            _next = next;
+        }
+        public async Task InvokeAsync(HttpContext context)
+        {
+            if (!context.Request.Headers.TryGetValue(APIKEYNAME, out var extractedApiKey))
+            {
+                context.Response.StatusCode = 401;
+                await context.Response.WriteAsync("Api Key was not provided. (Using ApiKeyMiddleware) ");
+                return;
+            }
+
+            var appSettings = context.RequestServices.GetRequiredService<IConfiguration>();
+
+            var apiKey = appSettings.GetValue<string>(APIKEYNAME);
+
+            if (!apiKey.Equals(extractedApiKey))
+            {
+                context.Response.StatusCode = 401;
+                await context.Response.WriteAsync("Unauthorized client. (Using ApiKeyMiddleware)");
+                return;
+            }
+
+            await _next(context);
+        }
+```
+Som ni ser ovan så om vi inte anger något APIKey så får vi ett 401 Statuskod
+med ett felmeddelande där det står "Api Key was not provided. (Using ApiKeyMiddleWare)
+men om vi Använder oss utav ApiKey men anger ett fellösenord så får vi ett 401 Statuskod
+med att ett Unauthorized client. (Using ApiKeyMiddleware) felmeddelande.
+
+Detta var själva kodlogiken och så klart har vi lagt till våra custom Middele i våra pipeline för
+att ha tillgång till det som ni ser enligt nedan:
+
+```csharp
+if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SpaceParkAPI v1"));
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseMiddleware<ApiMiddleware>(); //Vår egen middleware
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+```
+Sedan har vi kopplat vår ApiKey variabeln med lösenordet secret1234 i vår 
+appsettings.json fil som ni ser nedan:
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*",
+  "ApiKey": "secret1234"
+}
+```
 
 # Test
 
@@ -350,6 +431,18 @@ skapas ett entry med förarens namn, användarnamn och ett krypterad lösenord i
 
 ![30 april](https://user-images.githubusercontent.com/48633146/117115805-e510a780-ad8d-11eb-8585-55dbb6c53d9c.png)
 
+# Utvecklare API 
+
+För att kunna läsa om våran API end point: 
+* Starta programmet i dubug lägge => iisexprss 
+* Navigrea till https://localhost:44332/swagger/index.html 
+* Du kommer fram till en swager sida med alla end-point. 
+* För att kuna test APIet med Postman
+* Starta progarmmet i debug lägge => SpaceParkAPI
+* Starta postman applikationen 
+* välja metod typen /Get, /Post 
+* Endpoint http://localhost:5000/api/{controller name}
+
 # Misstag som vi ändrade under processen
 
 ## Början
@@ -366,18 +459,6 @@ Vi flyttade vår Get() method som vi hade i StarshipController till SwapiStarshi
 Därefter la vi ett init migration för att uppdatera vår DB med våra tabeller.
 På bilden nedan ser ni relationerna mellan våra tabeller
 ![DBConnection](https://user-images.githubusercontent.com/48633146/117143352-05059280-adb1-11eb-8d9a-ca66da86859b.PNG)
-
-## Utvecklare API 
-
-För att kunna läsa om våran API end point: 
-* Starta programmet i dubug lägge => iisexprss 
-* Navigrea till https://localhost:44332/swagger/index.html 
-* Du kommer fram till en swager sida med alla end-point. 
-* För att kuna test APIet med Postman
-* Starta progarmmet i debug lägge => SpaceParkAPI
-* Starta postman applikationen 
-* välja metod typen /Get, /Post 
-* Endpoint http://localhost:5000/api/{controller name}
 
 ## Slutet
 
